@@ -1,1 +1,20 @@
-lalal
+/* Stata program to create a table of balancedness in a RCT with *\
+
+capture program drop balancedness_rct
+program balancedness_rct
+
+args row dep treatment
+
+ {	
+	ttest `dep', by(`treatment') unequal
+  
+		mat TABLE[`row',1]=r(mu_1)
+	  mat TABLE[`row',2]=r(mu_2)
+		mat TABLE[`row'+1,1]=r(sd_1)
+	  mat TABLE[`row'+1,2]=r(sd_2)
+		mat TABLE[`row',3]=r(p)	
+		mat TABLE[`row',4]=r(N_1)+r(N_2)
+		
+}
+
+end
